@@ -32,20 +32,26 @@ public class ProblemSolutions {
         selectionSort(values, true);
     }
 
-    public static void selectionSort(int[] values, boolean ascending ) {
+     public static void selectionSort(int[] values, boolean ascending ) {
 
         int n = values.length;
 
         for (int i = 0; i < n - 1; i++) {
+            int currentIndex = i;
 
-            // YOU CODE GOES HERE -- COMPLETE THE INNER LOOP OF THIS
-            // "SELECTION SORT" ALGORITHM.
-            // DO NOT FORGET TO ADD YOUR NAME / SECTION ABOVE
+            for (int j = i +1; j < n; j++)  {
+                if ((ascending && values[j] < values[currentIndex]) || (!ascending && values[j] > values[currentIndex])) {
+                    currentIndex=j;
+                }
+            }
+
+            int temp = values[i];
+            values[i] = values[currentIndex];
+            values[currentIndex] = temp;
 
         }
 
     } // End class selectionSort
-
 
     /**
      *  Method mergeSortDivisibleByKFirst
