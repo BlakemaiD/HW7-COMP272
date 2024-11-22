@@ -277,12 +277,23 @@ public class ProblemSolutions {
      * @return          - the minimum number of rescue sleds required to hold all people
      */
 
-    public static int numRescueSleds(int[] people, int limit) {
+   public static int numRescueSleds(int[] people, int limit) {
 
         // YOUR CODE GOES HERE, CONSIDER USING ARRAYS.SORT
+        Arrays.sort(people);
 
-        return -1;
+        int left = 0;
+        int right = people.length - 1; // Heaviest person
+        int sledCount = 0;
 
+        while (left <= right) {
+            if (people[left] + people[right] <= limit) {
+                left++;
+            }
+            right--;
+            sledCount++;
+        }
+        return sledCount;
     }
 
 } // End Class ProblemSolutions
