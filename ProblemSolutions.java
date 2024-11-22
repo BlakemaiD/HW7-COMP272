@@ -107,8 +107,76 @@ public class ProblemSolutions {
         // ALLOCATES AUXILIARY DATA STRUCTURES (TEMPORARY ARRAYS). IT WILL BE EASIER
         // TO CODE WITH A SPACE COMPLEXITY OF O(N LOG N), WHICH IS FINE FOR PURPOSES
         // OF THIS PROGRAMMING EXERCISES.
+ int low = left;
+        int high = mid + 1;
+        int temp[] = new int[right-left+1];
+        int i = 0;
 
-        return;
+        while (low <= mid && high <= right) {
+            if (arr[low] % k == 0) {
+                temp[i++] = arr[low++];
+            } else if (arr[high] % k == 0) {
+                temp[i++] = arr[high++];
+            } else {
+
+                if (arr[low] <= arr[high]) {
+                    low++;
+                } else {
+                    high++;
+                }
+            }
+        }
+
+
+        while (low <= mid) {
+            if (arr[low] % k == 0) {
+                temp[i++] = arr[low];
+            }
+            low++;
+        }
+        while (high <= right) {
+            if (arr[high] % k == 0) {
+                temp[i++] = arr[high];
+            }
+            high++;
+        }
+
+        low = left;
+        high = mid + 1;
+
+        //sort the non divisible numbers
+        while (low <= mid && high <= right) {
+            if (arr[low] % k != 0 && arr[high] % k != 0) {
+                if (arr[low] <= arr[high]) {
+                    temp[i++] = arr[low++];
+                } else {
+                    temp[i++] = arr[high++];
+                }
+            } else {
+                if (arr[low] % k == 0) low++;
+                if (arr[high] % k == 0) high++;
+            }
+        }
+
+        //left subarray
+        while (low <= mid) {
+            if (arr[low] % k != 0) {
+                temp[i++] = arr[low];
+            }
+            low++;
+        }
+
+        //right subarray
+        while (high <= right) {
+            if (arr[high] % k != 0) {
+                temp[i++] = arr[high];
+            }
+            high++;
+        }
+
+        for (i = 0; i < temp.length; i++) {
+            arr[left + i] = temp[i];
+        }
 
     }
 
@@ -161,9 +229,22 @@ public class ProblemSolutions {
     public static boolean asteroidsDestroyed(int mass, int[] asteroids) {
 
         // YOUR CODE GOES HERE, CONSIDER USING ARRAYS.SORT()
+        Arrays.sort(asteroids);
 
-        return false;
-
+        int currentMass = mass;
+        int i = 0; // Start with the first asteroid
+        while (i < asteroids.length) {
+            if (currentMass < asteroids[i]) {
+                return false;
+            }
+            if (currentMass <= Integer.MAX_VALUE - asteroids[i]) {
+                currentMass += asteroids[i];
+            } else {
+                return true;
+            }
+            i++;
+        }
+        return true;
     }
 
 
